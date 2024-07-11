@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* 设置背景图片 */
+            background-image: url('/TLProject/img/loginbackground.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            /* 设置透明度 */
+            opacity: 0.9;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="submit"],
+        .form-group input[type="text"].captcha {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .form-group input[type="submit"] {
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .captcha-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .captcha-input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .captcha-image {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        #timeout {
+            font-size: 30px;
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+    <script th:src="@{/js/login.js}"></script>
+
+</head>
+<body>
+<div class="container">
+    <h2>登录</h2>
+    <form id="loginForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+            <label for="username">用户名:</label>
+            <input type="text" id="username" name="username"  placeholder="请输入用户名！" required>
+        </div>
+        <div class="form-group">
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password" placeholder="请输入密码！" required>
+        </div>
+        <div class="form-group captcha-container">
+            <input type="text" id="captcha" name="captcha" class="captcha captcha-input" placeholder="请输入验证码！"
+                   required>
+<!--            <label id="timeout">30</label>-->
+            <img src="/TLProject/captcha/generate" alt="captcha" class="captcha captcha-image" id="captchaImage"
+                 onclick="refreshCaptcha()">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="提交">
+        </div>
+    </form>
+<!--    添加注册链接-->
+    <p>还没有账号？<a href="register">注册</a></p>
+</div>
+</body>
+</html>

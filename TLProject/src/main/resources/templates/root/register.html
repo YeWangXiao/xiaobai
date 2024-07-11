@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:margin-left="http://www.w3.org/1999/xhtml" xmlns:margin-right="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* 设置背景图片 */
+            background-image: url('/TLProject/img/register.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.8); /* 透明度 */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 95%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .form-group button {
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .captcha-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .captcha-input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .captcha-image {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>注册</h2>
+    <form id="registerForm" onsubmit="handleRegister(event)">
+        <div class="form-group">
+            <label for="username">用户名：</label>
+            <input type="text" id="username" name="username" placeholder="请输入用户名！" required>
+        </div>
+        <div class="form-group">
+            <label for="email">邮箱：</label>
+            <input type="email" id="email" name="email" placeholder="请输入邮箱！" required>
+        </div>
+        <div class="form-group">
+            <label for="password">密码：</label>
+            <input type="password" id="password" name="password" placeholder="请输入密码！" required>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">确认密码：</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="请再次输入密码！" required>
+        </div>
+        <div class="form-group captcha-container">
+            <input type="text" id="captcha" name="captcha" class="captcha captcha-input" placeholder="请输入验证码！"
+                   required>
+            <img src="/TLProject/captcha/generate" alt="captcha" class="captcha captcha-image" id="captchaImage"
+                 onclick="refreshCaptcha()">
+        </div>
+        <div class="form-group">
+            <button type="submit">注册</button>
+            <a style="margin-right: 10px;" href="login">返回登录界面</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function handleRegister(event) {
+        event.preventDefault(); // 阻止表单默认提交行为
+        // 获取表单数据
+        var formData = new FormData(event.target);
+
+        //验证用户名、密码和验证码
+        var username = formData.get('username');
+        var password = formData.get('password');
+        var confirmPassword = formData.get('confirmPassword');
+        var email = formData.get('email');
+        var captcha = formData.get('captcha');
+
+        if (username === '' || password === '' || captcha === '' || email === '') {
+            alert('用户名、密码、邮箱或验证码不能为空！');
+            return;
+        }
+        if (password !== confirmPassword) {
+            alert('两次输入的密码不一致！');
+            return;
+        }
+        if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(email)) {
+            alert('邮箱格式不正确！');
+            return;
+        }
+
+        var userData = {
+            username: username,
+            password: password,
+            email: email,
+            captcha: captcha
+        };
+
+        // 发送异步请求
+        fetch('registerfun', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.resultCode === 200) {
+                    if (confirm("是否返回登录界面？")){
+                            window.location.href = '/TLProject/test/login';
+                    }else{
+                        window.location.href = '/TLProject/test/register';
+                    };
+                } else {
+                    // 用户名已存在或者已注册，验证码错误，刷新验证码
+                    refreshCaptcha();
+                    alert(data.message);
+                }
+            })
+            .catch(error => alert.error('Error:', error));
+    }
+
+    // 刷新验证码
+    function refreshCaptcha() {
+        var captchaImage = document.getElementById('captchaImage');
+        // 生成随机数作为参数
+        var randomNum = Math.floor(Math.random() * 1000);
+        captchaImage.src = '/TLProject/captcha/generate?rnd=' + randomNum;
+    }
+</script>
+</body>
+</html>

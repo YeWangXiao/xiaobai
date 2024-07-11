@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            margin-bottom: 10px;
+        }
+        .card p {
+            margin-bottom: 0;
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .logout-btn {
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>欢迎来到首页</h1>
+        <a href="/TLProject/api/logout" class="logout-btn">注销</a>
+    </div>
+    <div class="content">
+        <div class="card">
+            <h2>关于我们</h2>
+            <p>这里是一个简单的首页，欢迎访问！</p>
+        </div>
+        <div class="card">
+            <h2>联系我们</h2>
+            <p>电话：123-456-7890<br>Email：info@example.com</p>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 版权所有</p>
+    </div>
+</div>
+</body>
+</html>

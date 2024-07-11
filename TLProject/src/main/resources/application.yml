@@ -1,0 +1,61 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+##    项目库
+#    pm:
+#      url: jdbc:sqlserver://localhost:1433;databaseName=PM
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      username: sa
+#      password: 123321
+##    用户库
+#    usr:
+    url: jdbc:sqlserver://localhost:1433;databaseName=USR
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: 123321
+
+
+
+Security:
+  basic:
+    enabled: true   //secuity 默认开启
+
+#Thymeleaf配置
+  thymeleaf:
+    prefix: classpath:/templates/  # 设置Thymeleaf模板文件的位置
+    suffix: .html  # 设置模板文件的后缀
+    cache: false  # 是否启用模板缓存，默认为true，开发阶段可以设置为false
+    mode: HTML5  # 设置模板渲染模式，支持XML、TEXT、HTML5
+    encoding: UTF-8  # 设置模板文件的编码方式
+    servlet:
+      content-type: text/html;charset=UTF-8  # 设置模板文件的内容类型
+
+
+#Redis配置
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器地址
+    host: 192.168.1.5
+    # Redis服务器连接端口
+    port: 6379
+    # Redis 服务器链接密码
+#    password: 123321
+    # 连接超时时间（毫秒）
+    timeout: 5000
+    client-name: jedis
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+
+
+
